@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Sabor Latino{% endblock %}</title>
-    <!-- Importamos los estilos estáticos creados en el Paso 2 -->
     <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
-    <!-- Fuente de Google para mejor diseño -->
-    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- Fixed: was googleapis.com, missing fonts. subdomain -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Barra de Navegación Común -->
     <nav class="navbar">
         <div class="logo">🌶️ Sabor Latino</div>
         <div class="navbar-links">
@@ -22,12 +20,10 @@
         </div>
     </nav>
 
-    <!-- Aquí se inyectará el contenido específico de cada página -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Pie de Página Común -->
     <footer>
         <p>&copy; 2026 Restaurante Sabor Latino - De nuestra cocina a tu mesa con sazón de verdad.</p>
     </footer>

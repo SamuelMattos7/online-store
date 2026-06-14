@@ -3,10 +3,10 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from connection import MenuItem
-
+from models.models import MenuItem
 from db.database import get_db
-templates = Jinja2Templates(directory="templates")
+from dependancies import templates
+from sqlalchemy.orm import selectinload
 
 router = APIRouter(prefix="/menu", tags=["Menu"])
 
@@ -19,23 +19,25 @@ def get_menu_categories(request: Request):
         {"request": request, "categories": categories_list}
     )
 
-@router.get("/items")
-def get_menu_items(request: Request, category: str = None):
-    return templates.TemplateResponse(
-        request,
-        "menu_items.html", 
-        {"request": request, "category": category}
-    )
-
 @router.get("/menu-items")  
 async def get_menu_items(
     request: Request,
     db: Annotated[AsyncSession, Depends(get_db)]
 ):
-    result = await db.execute(select(MenuItem))
+    result = await db.execute(
+        select(MenuItem)
+        .options(selectinload(MenuItem.category))
+        .order_by(MenuItem.category_id)
+    )
     items = result.scalars().all()
-    
+        
+    grouped = {}
+    for item in items:
+        cat_name = item.category.name
+        grouped.setdefault(cat_name, []).append(item)
+
     return templates.TemplateResponse(
-        "menu_items.html",
-        {"request": request, "items": items}
+        request=request,
+        name="menu.html",
+        context={"grouped_items": grouped}
     )
