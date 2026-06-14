@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers import home, about, menu, cart, checkout
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
-    title="Ecommerce API",
-    description="FastAPI skeleton for ecommerce application",
+    title="Online Store",
+    description="ecommerce restaurant for managing customers, menu items, and orders",
     version="1.0.0"
 )
 
@@ -16,21 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
-async def index():
-    """Index route - Welcome message"""
-    return {
-        "message": "Welcome to Ecommerce API",
-        "version": "1.0.0",
-        "status": "running"
-    }
-
-
-@app.get("/health")
-async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy"}
+app.include_router(home.router)
+app.include_router(about.router)
+app.include_router(menu.router)
+app.include_router(cart.router)
+app.include_router(checkout.router)
 
 
 if __name__ == "__main__":
