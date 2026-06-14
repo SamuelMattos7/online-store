@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Nosotros - Sabor Latino Restaurant{% endblock %}
+
+{% block content %}
+<section style="max-width: 800px; margin: 4rem auto; padding: 0 2rem; text-align: center;">
+    
+    <!-- Título Principal con los colores latinos -->
+    <h1 style="color: var(--primary-color); font-size: 2.8rem; margin-bottom: 1.5rem; text-shadow: 1px 1px var(--secondary-color);">
+        Nuestra Historia 🥘
+    </h1>
+    
+    <!-- Párrafos descriptivos con texto fijo -->
+    <p style="font-size: 1.2rem; line-height: 1.8; color: var(--dark-color); margin-bottom: 2rem;">
+        Fundado en el año 2015 por la Familia Mendoza, Sabor Latino nació con un sueño claro: 
+        traer la alegría, los aromas y el sazón auténtico de los hogares latinoamericanos 
+        directamente a tu mesa. 
+    </p>
+
+    <p style="font-size: 1.2rem; line-height: 1.8; color: var(--dark-color); margin-bottom: 3rem;">
+        Nos especializamos en el sabor casero y la sazón del Caribe. Cada plato que servimos está preparado 
+        con ingredientes frescos seleccionados rigurosamente, amor por nuestras raíces y el toque secreto que solo 
+        nuestra abuela conoce. Aquí no solo vienes a comer, vienes a vivir una fiesta de sabores.
+    </p>
+
+    <!-- Sección de Valores en tarjetas sencillas -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--accent-color);">
+            <h3 style="color: var(--accent-color); margin-top: 0;">Misión ✨</h3>
+            <p style="font-size: 0.95rem;">Alegrar corazones alimentando el cuerpo y el espíritu con la mejor hospitalidad latina.</p>
+        </div>
+        
+        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary-color);">
+            <h3 style="color: var(--primary-color); margin-top: 0;">Pasión 🔥</h3>
+            <p style="font-size: 0.95rem;">Cocinar desde cero respetando las recetas tradicionales y el fuego de nuestros fogones.</p>
+        </div>
+    </div>
+
+    <!-- Botón de acción para ir al menú -->
+    <div style="margin-top: 4rem;">
+        <a href="/menu" class="btn-primary" style="display: inline-block;">¡Prueba Nuestra Pasión Hoy! 🍽️</a>
+    </div>
+
+</section>
+{% endblock %}
