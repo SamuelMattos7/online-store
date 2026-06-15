@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from routers import home, about, menu, cart, checkout
 from fastapi.staticfiles import StaticFiles
+from dependencies import templates, load
+import os  
 
 app = FastAPI(
     title="Online Store",
@@ -9,7 +12,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS middleware configuration
+SECRET_KEY = os.getenv("SESSION_SECRET_KEY")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,7 +22,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(
+    SessionMiddleware, 
+    secret_key=SECRET_KEY,
+    session_cookie="session",       
+    max_age=14 * 24 * 60 * 60,      
+    same_site="lax",               
+    https_only=False                
+)
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+def get_cart_total_items(request):
+    if not request:
+        return 0
+    cart = request.session.get("cart", {})
+    return sum(cart.values())
+
+templates.env.globals["get_cart_total_items"] = get_cart_total_items
 
 app.include_router(home.router)
 app.include_router(about.router)

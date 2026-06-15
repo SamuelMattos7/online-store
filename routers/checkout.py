@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.templating import Jinja2Templates
-templates = Jinja2Templates(directory="templates")
+from dependencies import templates
 
 router = APIRouter(prefix="/checkout", tags=["Checkout"])
 
